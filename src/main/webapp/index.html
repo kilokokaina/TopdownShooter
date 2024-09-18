@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <title>Main page</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <script type="text/javascript" charset="utf-8" src="teavm/classes.js"></script>
+        <style>
+            .stage {
+                width: 1280px;
+                height: 720px;
+                position: relative;
+                border: 2px solid black;
+            }
+            canvas {
+                position: absolute;
+            }
+            #player-layer {
+                z-index: 1;
+            }
+            #projectile-layer {
+                z-index: 2;
+            }
+            #enemy-layer {
+                z-index: 3;
+            }
+        </style>
+    </head>
+    <body onload="main()">
+        <label>Points: <span id="points">0</span></label>
+        <label>Health: <span id="health">1000</span></label>
+        <div class="stage">
+            <canvas id="player-layer" style="width: 1280px; height: 720px"></canvas>
+            <canvas id="projectile-layer" style="width: 1280px; height: 720px"></canvas>
+            <canvas id="enemy-layer" style="width: 1280px; height: 720px"></canvas>
+        </div>
+        <div>
+            <button id="play">Play</button>
+        </div>
+    </body>
+</html>
