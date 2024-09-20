@@ -21,6 +21,7 @@ public class Client {
 
     private static int PLAYER_POINTS = 0;
     private static int PLAYER_HEALTH = 1000;
+    private static final AtomicInteger KILL_COUNTER = new AtomicInteger(0);
 
     private static final AtomicInteger CURRENT_PLAYER_X = new AtomicInteger();
     private static final AtomicInteger CURRENT_PLAYER_Y = new AtomicInteger();
@@ -47,6 +48,8 @@ public class Client {
             ENEMY_LIST.add(i, enemy);
 
             CTX_ENEMIES.fillRect(enemy.getX(), enemy.getY(), enemySize, enemySize);
+
+            System.out.println(count + " " + enemyType.name());
         }
 
     }
@@ -121,6 +124,7 @@ public class Client {
                         System.out.println(enemy.getEnemyHealth());
                         if (enemy.getEnemyHealth() == 0) {
                             CTX_ENEMIES.clearRect(enemy.getX(), enemy.getY(), enemy.getType().getSize(), enemy.getType().getSize());
+                            System.out.println(KILL_COUNTER.incrementAndGet());
 
                             enemy.setX(-30);
                             enemy.setY(-30);
@@ -132,9 +136,9 @@ public class Client {
                             case PUDGE -> HTMLDocument.current().querySelector("#points").setInnerText(String.valueOf(PLAYER_POINTS += 20));
                         }
 
-                        if (PLAYER_POINTS % (ENEMY_LIST.size() * 5) == 0) renderEnemies(20, EnemyType.RUNNER);
-                        if (PLAYER_POINTS % 30 == 0) renderEnemies(10, EnemyType.SHOOTER);
-                        if (PLAYER_POINTS % 60 == 0) renderEnemies(3, EnemyType.PUDGE);
+                        if (KILL_COUNTER.get() % 40 == 0) renderEnemies(40, EnemyType.RUNNER);
+                        if (KILL_COUNTER.get() % 120 == 0) renderEnemies(10, EnemyType.SHOOTER);
+                        if (KILL_COUNTER.get() % 360 == 0) renderEnemies(3, EnemyType.PUDGE);
 
                         return true;
                     }
@@ -310,7 +314,7 @@ public class Client {
 
             CTX_PLAYER.fillRect(CURRENT_PLAYER_X.get(), CURRENT_PLAYER_Y.get(), 12, 12);
 
-            renderEnemies(30, EnemyType.RUNNER);
+            renderEnemies(40, EnemyType.RUNNER);
             moveEnemies();
         });
 
